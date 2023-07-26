@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Designer Page</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        .card {
+            width: 300px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 7px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width:100%;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+
+
+        h1,h2{
+            text-align:center;
+        }
+
+        .messages {
+            list-style-type: none;
+        }
+        
+        .messages li {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .messages li.success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+    </style>
+
+    <script>
+        setTimeout(function() {
+          document.getElementsByClassName("messages")[0].style.display = "none";
+        }, 1000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="card">
+            <h1>----TASKS----</h1>
+            <hr>
+            {% if myinfo %}
+            <ol>
+                {% for tasks in myinfo %}
+                    <li>
+                        {{tasks.task}}
+                        <a href="{% url 'details:delete' tasks.task %}"><button id="but">Delete</button></a>
+                    </li>
+                    
+                    <hr>
+                {% endfor %}
+            </ol>
+            <a href="{% url 'details:home' %}"><button>+ ADD MORE TASKS</button></a>
+            {% else %}
+            <h2>No tasks</h2>
+            <a href="{% url 'details:home' %}"><button>HOME</button></a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

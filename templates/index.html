@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Designer Page</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        .card {
+            width: 300px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .messages {
+            list-style-type: none;
+        }
+        
+        .messages li {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .messages li.success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        
+        
+    </style>
+
+    <script>
+        setTimeout(function() {
+          document.getElementsByClassName("messages")[0].style.display = "none";
+        }, 1000);
+      </script>
+</head>
+<body>
+    <div class="container">
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+        <div class="card">
+            <h1>TODO</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" class="input-box" placeholder="Enter your task" name="txt" required />
+                <button type="submit" class="button">ADD</button>
+                <a href="{% url 'details:display' %}"><button type="button" class="button">SHOW</button></a>
+                <a target="_blank" href="{% url 'admin:index' %}"><button type="button" class="button">ADMIN</button></a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
